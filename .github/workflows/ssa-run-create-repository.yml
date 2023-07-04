@@ -11,7 +11,10 @@ on:
         required: true
       orgApiKey:
         description: Token public org
-        required: true        
+        required: true       
+      gitHubToken:
+        description: GIT Token
+        required: true       
       repoName: 
         description: 'Name of the repository to be created'
         required: true
@@ -62,12 +65,12 @@ jobs:
         id: create-repo
         run: |
           repoName="${{ github.event.inputs.repoName }}"
-          orgAdminToken="${{ secrets.GITHUB_TOKEN }}"
+          orgAdminToken="${{ github.event.inputs.gitHubToken }}"
           autoInit="${{ github.event.inputs.autoInit }}" 
           private="${{ github.event.inputs.private }}" 
           repoDescr="${{ github.event.inputs.repoDescr }}" 
 
-          response=$(curl -X POST -H "Authorization: Bearer $orgAdminToken" \
+          response=$(curl -X POST -H "Authorization: $orgAdminToken" \
             -H "Accept: application/vnd.github+json" \
             -H "X-OAuth-Scopes: repo" \
             -d '{
