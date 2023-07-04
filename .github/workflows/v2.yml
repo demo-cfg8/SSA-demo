@@ -37,7 +37,9 @@ on:
 jobs:
   create_repo_job:
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions: 
+      repository-projects: 'write'
+      issues: 'write'
     steps:
       - name: Print parameters
         run: |
